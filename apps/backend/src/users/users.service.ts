@@ -3,6 +3,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { LoginUserDto } from './dto/login-user.dto';
 import { UsersDao } from './dao/users.dao';
+import { generateJwtToken } from '../utils/jwt.utils';
 
 @Injectable()
 export class UsersService {
@@ -21,8 +22,19 @@ export class UsersService {
     if (!isValidPassword) {
       throw new HttpException(`Incorrect username or password.`, 400);
     }
-
-    return user;
+    const { name, username, email, password } = user;
+    const token = generateJwtToken({
+      email: user.email,
+      username: user.username,
+      name: user.name,
+      sub: user._id.toString(),
+    });
+    return {
+      name,
+      username,
+      email,
+      token, 
+    };
   }
 
   // findAll() {
