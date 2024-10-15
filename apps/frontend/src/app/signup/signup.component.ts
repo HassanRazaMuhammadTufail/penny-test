@@ -1,10 +1,13 @@
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { signup } from '../state/auth.actions';
+import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-signup',
+  selector: 'app-signup',  
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.css']
 })
@@ -19,7 +22,7 @@ export class SignupComponent {
     });
   }
 
-  oonSubmit() {
+  onSubmit() {
     if (this.signupForm.valid) {
       this.store.dispatch(signup({ 
         email: this.signupForm.value.email, 

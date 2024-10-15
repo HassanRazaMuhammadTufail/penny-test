@@ -16,16 +16,18 @@ export const authFeatureKey = 'auth';
 // );
 
 import { createReducer, on } from '@ngrx/store';
-import { signup, login, logout } from './auth.actions';
+import { signup, login, logout, signupFailure, signupSuccess, loginFailure, loginSuccess } from './auth.actions';
 
 export interface AuthState {
   isAuthenticated: boolean;
   user: any | null;
+  error: any | null;
 }
 
 export const initialState: AuthState = {
   isAuthenticated: false,
   user: null,
+  error: null,
 };
 
 const _authReducer = createReducer(
@@ -33,8 +35,37 @@ const _authReducer = createReducer(
   on(signup, (state, { email }) => ({
     ...state, isAuthenticated: true, user: { email }
   })),
+   // Handle signup success
+   on(signupSuccess, (state, { user }) => ({
+    ...state,
+    isAuthenticated: true,
+    user,
+    error: null
+  })),
+
+  // Handle signup failure
+  on(signupFailure, (state, { error }) => ({
+    ...state,
+    error,
+    isAuthenticated: false
+  })),
   on(login, (state, { email }) => ({
     ...state, isAuthenticated: true, user: { email }
+  })),
+
+  // Handle login success
+  on(loginSuccess, (state, { user }) => ({
+    ...state,
+    isAuthenticated: true,
+    user,
+    error: null
+  })),
+
+  // Handle login failure
+  on(loginFailure, (state, { error }) => ({
+    ...state,
+    error,
+    isAuthenticated: false
   })),
   on(logout, (state) => ({
     ...state, isAuthenticated: false, user: null
