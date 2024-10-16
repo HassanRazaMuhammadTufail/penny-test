@@ -12,10 +12,15 @@ import { ObserversModule } from '@angular/cdk/observers';
 @Component({
   selector: 'app-signup',  
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, ObserversModule,MatFormFieldModule,
+  imports: [
+    CommonModule, 
+    ReactiveFormsModule, 
+    ObserversModule,
+    MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    MatSnackBarModule],
+    MatSnackBarModule
+  ],
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.css']
 })
