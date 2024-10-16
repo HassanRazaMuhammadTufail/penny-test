@@ -49,8 +49,8 @@ const _authReducer = createReducer(
     error,
     isAuthenticated: false
   })),
-  on(login, (state, { email }) => ({
-    ...state, isAuthenticated: true, user: { email }
+  on(login, (state, { username }) => ({
+    ...state, isAuthenticated: true, user: { username }
   })),
 
   // Handle login success

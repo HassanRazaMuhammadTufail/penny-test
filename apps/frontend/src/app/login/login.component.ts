@@ -16,7 +16,7 @@ export class LoginComponent {
 
   constructor(private fb: FormBuilder, private store: Store) {
     this.loginForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
+      username: ['', [Validators.required,]],
       password: ['', Validators.required]
     });
   }
@@ -24,7 +24,7 @@ export class LoginComponent {
   onSubmit() {
     if (this.loginForm.valid) {
       this.store.dispatch(login({ 
-        email: this.loginForm.value.email, 
+        username: this.loginForm.value.username, 
         password: this.loginForm.value.password 
       }));
     }

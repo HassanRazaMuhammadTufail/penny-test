@@ -16,7 +16,7 @@ export class UsersController {
       if(error?.code == 11000) {
         throw new HttpException(`User with ${Object.keys(error.keyValue)[0]}: ${Object.values(error.keyValue)[0]} is already registered.`, 400);
       } else {
-        throw new Error(error);
+        throw new HttpException(error, 400);
       }
     }
   }

@@ -51,7 +51,7 @@ export class AuthEffects {
   signup$ = createEffect(() => this.actions$.pipe(
     ofType(signup), // Listen for the signup action
     mergeMap(action => 
-      this.authService.signup(action.email, action.password).pipe( // Call the API
+      this.authService.signup(action.name, action.username, action.email, action.password).pipe( // Call the API
         map(user => signupSuccess({ user })), // Dispatch success action if API call is successful
         catchError(error => of(signupFailure({ error }))) // Dispatch failure action if API fails
       )
@@ -62,7 +62,7 @@ export class AuthEffects {
   login$ = createEffect(() => this.actions$.pipe(
     ofType(login), // Listen for the login action
     mergeMap(action => 
-      this.authService.login(action.email, action.password).pipe( // Call the API
+      this.authService.login(action.username, action.password).pipe( // Call the API
         map(user => loginSuccess({ user })), // Dispatch success action if API call is successful
         catchError(error => of(loginFailure({ error }))) // Dispatch failure action if API fails
       )

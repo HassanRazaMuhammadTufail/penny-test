@@ -10,7 +10,12 @@ export class UsersService {
   constructor(private readonly usersDao: UsersDao) {}
 
   async signup(createUserDto: CreateUserDto) {
-    return await this.usersDao.createUser(createUserDto);
+    const user = await this.usersDao.createUser(createUserDto);
+    return {
+      name: user.name,
+      username: user.username,
+      email: user.email,
+    }
   }
 
   async login(loginUserDto: LoginUserDto) {
