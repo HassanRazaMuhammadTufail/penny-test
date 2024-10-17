@@ -1,3 +1,11 @@
-import { createAction } from '@ngrx/store';
+import { createAction, props } from '@ngrx/store';
 
-export const loadProducts = createAction('[Product] Load Products');
+export const loadProducts = createAction('[Products] Load Products');
+export const loadProductsSuccess = createAction(
+  '[Products] Load Products Success',
+  props<{ products: any[] }>()
+);
+export const loadProductsFailure = createAction(
+  '[Products] Load Products Failure',
+  props<{ error: any }>()
+);

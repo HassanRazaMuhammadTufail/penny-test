@@ -1,23 +1,7 @@
-// import { createReducer, on } from '@ngrx/store';
-// import { AuthActions } from './auth.actions';
+import { createReducer, on } from '@ngrx/store';
+import { signup, login, logout, signupFailure, signupSuccess, loginFailure, loginSuccess, logoutSuccess } from './auth.actions';
 
 export const authFeatureKey = 'auth';
-
-// export interface State {
-
-// }
-
-// export const initialState: State = {
-
-// };
-
-// export const reducer = createReducer(
-//   initialState,
-// );
-
-import { createReducer, on } from '@ngrx/store';
-import { signup, login, logout, signupFailure, signupSuccess, loginFailure, loginSuccess } from './auth.actions';
-
 export interface AuthState {
   isAuthenticated: boolean;
   user: any | null;
@@ -69,7 +53,8 @@ const _authReducer = createReducer(
   })),
   on(logout, (state) => ({
     ...state, isAuthenticated: false, user: null
-  }))
+  })),
+  on(logoutSuccess, () => initialState)
 );
 
 export function authReducer(state: any, action: any) {

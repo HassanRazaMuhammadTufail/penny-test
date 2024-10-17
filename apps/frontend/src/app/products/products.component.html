@@ -1,13 +1,16 @@
-<nav>
-    <ul>
-      <li><a (click)="logout()">Logout</a></li>
-    </ul>
-  </nav>
-  
-  <h1>Products</h1>
-  <ul>
-    <li *ngFor="let product of products$ | async">
-      {{ product.name }} - {{ product.price }}
-    </li>
-  </ul>
-  
+<div class="products-container">
+  <h2>Products</h2>
+  <mat-grid-list cols="3" rowHeight="1:1.5" *ngIf="(products$ | async) as products">
+    <mat-grid-tile *ngFor="let product of products">
+      <mat-card class="product-card">
+        <img mat-card-image [src]="product.image" alt="{{ product.name }}" class="product-image">
+        <mat-card-content>
+          <h3>{{ product.name }}</h3>
+          <p class="price">Price: {{ product.price }}</p>
+          <p class="description">{{ product.description }}</p>
+        </mat-card-content>
+      </mat-card>
+    </mat-grid-tile>
+  </mat-grid-list>
+</div>
+<button mat-raised-button color="warn" (click)="logout()" class="logout-button">Logout</button>

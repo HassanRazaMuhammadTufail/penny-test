@@ -1,0 +1,10 @@
+import { Document } from 'mongoose';
+
+export interface IProduct extends Document {
+    name: string;
+    price: string;
+    image?: string;
+    description: string;
+    createdAt: Date;
+    updatedAt: Date;
+  }

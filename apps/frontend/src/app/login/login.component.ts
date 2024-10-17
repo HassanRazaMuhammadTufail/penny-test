@@ -8,6 +8,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ObserversModule } from '@angular/cdk/observers';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -27,7 +28,11 @@ import { ObserversModule } from '@angular/cdk/observers';
 export class LoginComponent {
   loginForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private store: Store) {
+  constructor(
+    private fb: FormBuilder,
+    private store: Store,
+    private router: Router
+  ) {
     this.loginForm = this.fb.group({
       username: ['', Validators.required],
       password: ['', Validators.required]
@@ -40,6 +45,16 @@ export class LoginComponent {
         username: this.loginForm.value.username, 
         password: this.loginForm.value.password 
       }));
+
+      this.store.select((state: any) => state.auth?.user).subscribe(user => {
+        if (user) {
+          this.router.navigate(['/']);
+        }
+      });
     }
+  }
+
+  goToSignup() {
+    this.router.navigate(['/signup']);
   }
 }

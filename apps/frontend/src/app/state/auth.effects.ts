@@ -1,48 +1,11 @@
-// import { Injectable } from '@angular/core';
-// import { Actions, createEffect } from '@ngrx/effects';
-
-
-
-// @Injectable()
-// export class AuthEffects {
-
-
-//   constructor(private actions$: Actions) {}
-// }
-
-// import { Injectable } from '@angular/core';
-// import { Actions, createEffect, ofType } from '@ngrx/effects';
-// import { of } from 'rxjs';
-// import { catchError, map, mergeMap } from 'rxjs/operators';
-// import { AuthService } from './auth.service'; // Assume this is your service for handling API requests
-// import { login, loginSuccess, loginFailure } from './auth.actions';
-
-// @Injectable()
-// export class AuthEffects {
-
-//   login$ = createEffect(() => this.actions$.pipe(
-//     ofType(login),
-//     mergeMap(action =>
-//       this.authService.login(action.email, action.password).pipe(
-//         map(user => loginSuccess({ user })),
-//         catchError(() => of(loginFailure()))
-//       )
-//     )
-//   ));
-
-//   constructor(
-//     private actions$: Actions,
-//     private authService: AuthService
-//   ) {}
-// }
-
-
 import { inject, Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { AuthService } from '../services/auth.service';  // Service for API calls
 import { signup, signupSuccess, signupFailure, login, loginFailure, loginSuccess } from './auth.actions';
-import { catchError, map, mergeMap } from 'rxjs/operators';
+import { catchError, map, mergeMap, tap } from 'rxjs/operators';
 import { of } from 'rxjs';
+import * as AuthActions from './auth.actions';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class AuthEffects {
@@ -69,8 +32,18 @@ export class AuthEffects {
     )
   ));
 
+  logout$ = createEffect(() => this.actions$.pipe(
+    ofType(AuthActions.logout),
+    tap(() => {
+      this.authService.logout();
+      this.router.navigate(['/login']);
+    }),
+    map(() => AuthActions.logoutSuccess())
+  ));
+
   constructor(
     // private actions$: Actions,
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router
   ) {}
 }
